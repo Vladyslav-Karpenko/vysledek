@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vysledek.cz – Prémiová doména na prodej</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main
+      class="min-h-screen hero-gradient relative flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8"
+    >
+      <!-- Декоративные элементы -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="absolute -top-40 -right-40 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        ></div>
+        <div
+          class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+          style="animation-delay: 2s"
+        ></div>
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse"
+          style="animation-delay: 1s"
+        ></div>
+      </div>
+
+      <!-- Контент -->
+      <div class="relative z-10 w-full max-w-4xl mx-auto">
+        <!-- Заголовок -->
+        <div class="text-center mb-12 sm:mb-16">
+          <!-- Бейдж статуса -->
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8"
+          >
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"
+              ></span>
+            </span>
+            <span class="text-sm font-medium text-gray-300"
+              >Doména je k dispozici k okamžitému převodu</span
+            >
+          </div>
+
+          <!-- Доменное имя -->
+          <h1
+            class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-4"
+          >
+            <span class="gradient-text">vysledek</span
+            ><span class="text-white">.cz</span>
+          </h1>
+
+          <!-- Подзаголовок -->
+          <p
+            class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mt-6"
+          >
+            Prémiová česká doména pro váš projekt.
+            <span class="text-gray-300 font-medium"
+              >Ideální pro zpravodajský portál, výsledkový servis, analytický
+              nástroj nebo sportovní platformu.</span
+            >
+          </p>
+
+          <!-- Ключевые преимущества -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 max-w-2xl mx-auto"
+          >
+            <div
+              class="glass-card rounded-2xl p-4 text-center hover:border-indigo-500/30 transition-all duration-300"
+            >
+              <div class="text-2xl mb-2">🇨🇿</div>
+              <p class="text-sm font-medium text-gray-200">Česká doména .cz</p>
+              <p class="text-xs text-gray-500 mt-1">Důvěryhodná a lokální</p>
+            </div>
+            <div
+              class="glass-card rounded-2xl p-4 text-center hover:border-indigo-500/30 transition-all duration-300"
+            >
+              <div class="text-2xl mb-2">🚀</div>
+              <p class="text-sm font-medium text-gray-200">Silný branding</p>
+              <p class="text-xs text-gray-500 mt-1">Krátké a zapamatovatelné</p>
+            </div>
+            <div
+              class="glass-card rounded-2xl p-4 text-center hover:border-indigo-500/30 transition-all duration-300"
+            >
+              <div class="text-2xl mb-2">💎</div>
+              <p class="text-sm font-medium text-gray-200">SEO potenciál</p>
+              <p class="text-xs text-gray-500 mt-1">Klíčové slovo v názvu</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка с формой -->
+        <div class="glass-card rounded-3xl p-6 sm:p-8 md:p-10 max-w-xl mx-auto">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">
+              Máte zájem o doménu?
+            </h2>
+            <p class="text-gray-400 text-sm sm:text-base">
+              Vyplňte formulář a já se vám ozvu. Nebo mě kontaktujte přímo přes
+              WhatsApp.
+            </p>
+          </div>
+
+          <!-- Блок для сообщений Formspree -->
+          <div id="form-messages" class="mb-6"></div>
+
+          <!-- Форма Formspree -->
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/mwvdkdzj"
+            method="POST"
+            class="space-y-5"
+          >
+            <!-- Имя -->
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Vaše jméno *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Jan Novák"
+                class="w-full px-4 py-3 rounded-xl glass-input text-white placeholder-gray-500 text-sm sm:text-base"
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Váš e-mail *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="jan.novak@email.cz"
+                class="w-full px-4 py-3 rounded-xl glass-input text-white placeholder-gray-500 text-sm sm:text-base"
+              />
+            </div>
+
+            <!-- Предлагаемая цена -->
+            <div>
+              <label
+                for="offer"
+                class="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Vaše nabídka (CZK) *
+              </label>
+              <input
+                type="text"
+                id="offer"
+                name="offer"
+                required
+                placeholder="např. 50 000 Kč"
+                class="w-full px-4 py-3 rounded-xl glass-input text-white placeholder-gray-500 text-sm sm:text-base"
+              />
+            </div>
+
+            <!-- Сообщение -->
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Zpráva
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="3"
+                placeholder="Stručně popište váš záměr s doménou..."
+                class="w-full px-4 py-3 rounded-xl glass-input text-white placeholder-gray-500 text-sm sm:text-base resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Скрытое поле для темы (опционально) -->
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nová nabídka na doménu vysledek.cz"
+            />
+
+            <!-- Защита от спама (Honeypot) -->
+            <input type="text" name="_gotcha" style="display: none" />
+
+            <!-- Кнопка отправки -->
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
+              </svg>
+              <span id="submit-text">Odeslat nabídku</span>
+              <svg
+                id="loading-spinner"
+                class="hidden w-5 h-5 animate-spin"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Разделитель -->
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-700"></div>
+            </div>
+            <div class="relative flex justify-center text-xs uppercase">
+              <span class="bg-[#0a0a0a] px-4 text-gray-500">nebo</span>
+            </div>
+          </div>
+
+          <!-- Прямая ссылка на WhatsApp -->
+          <a
+            href="https://wa.me/420735851069?text=Dobr%C3%BD%20den%20%F0%9F%98%8E"
+            target="_blank"
+            rel="noopener"
+            class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <svg
+              class="w-5 h-5 whatsapp-pulse"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              />
+            </svg>
+            <span>Rychlý kontakt přes WhatsApp</span>
+          </a>
+
+          <!-- Прямой контакт -->
+          <div class="mt-4 text-center text-xs text-gray-500">
+            <p>
+              nebo pište na:
+              <span class="text-indigo-400">+420 735 851 069</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Футер -->
+        <footer class="mt-12 text-center text-xs text-gray-600">
+          <p>
+            © 2024 vysledek.cz – Všechna práva vyhrazena. Doména je registrována
+            dle pravidel CZ.NIC.
+          </p>
+        </footer>
+      </div>
+    </main>
+
+    <!-- Скрипт для обработки формы через AJAX -->
+    <script src="main.js"></script>
+  </body>
+</html>
