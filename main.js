@@ -1,116 +1,192 @@
- (function () {
-        const form = document.getElementById("contact-form");
-        const messagesDiv = document.getElementById("form-messages");
-        const submitBtn = document.getElementById("submit-btn");
-        const submitText = document.getElementById("submit-text");
-        const loadingSpinner = document.getElementById("loading-spinner");
+// ===== КАСТОМНЫЙ КУРСОР =====
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+let mouseX = 0, mouseY = 0;
 
-        // Данные формы для WhatsApp (сохраняем перед отправкой)
-        let formData = {};
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 
-        form.addEventListener("submit", async function (e) {
-          e.preventDefault();
+  if (cursor) {
+    cursor.style.left = `${mouseX - 20}px`;
+    cursor.style.top = `${mouseY - 20}px`;
+  }
+  if (cursorDot) {
+    cursorDot.style.left = `${mouseX - 3}px`;
+    cursorDot.style.top = `${mouseY - 3}px`;
+  }
+});
 
-          // Сохраняем данные для WhatsApp
-          formData = {
-            name: document.getElementById("name").value.trim(),
-            email: document.getElementById("email").value.trim(),
-            offer: document.getElementById("offer").value.trim(),
-            message: document.getElementById("message").value.trim(),
-          };
+// Увеличение курсора на ссылках и кнопках
+document.querySelectorAll('a, button, input, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor?.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => cursor?.classList.remove('cursor-hover'));
+});
 
-          // Показываем загрузку
-          submitBtn.disabled = true;
-          submitText.textContent = "Odesílám...";
-          loadingSpinner.classList.remove("hidden");
-          messagesDiv.innerHTML = "";
+// ===== ПАРТИКЛЫ (Canvas) =====
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
 
-          try {
-            // Отправляем данные в Formspree
-            const response = await fetch(form.action, {
-              method: "POST",
-              body: new FormData(form),
-              headers: {
-                Accept: "application/json",
-              },
-            });
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-            if (response.ok) {
-              // Успешная отправка
-              const data = await response.json();
-              showSuccess(data);
-            } else {
-              // Ошибка отправки
-              const data = await response.json();
-              showError(data);
-            }
-          } catch (error) {
-            // Сетевая ошибка
-            showError({
-              error: "Network error. Please check your connection.",
-            });
-          } finally {
-            // Возвращаем кнопку в исходное состояние
-            submitBtn.disabled = false;
-            submitText.textContent = "Odeslat nabídku";
-            loadingSpinner.classList.add("hidden");
-          }
-        });
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+      this.reset();
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(168, 85, 247, ${this.opacity})`;
+    ctx.fill();
+  }
+}
 
-        function showSuccess(data) {
-          // Показываем сообщение об успехе
-          messagesDiv.innerHTML = `
-          <div class="formspree-success mb-4">
-            <p class="font-semibold text-lg mb-2">✅ Nabídka odeslána!</p>
-            <p class="text-sm opacity-90">Děkuji za váš zájem. Brzy se vám ozvu.</p>
-          </div>
-          <div class="text-center">
-            <p class="text-gray-400 text-sm mb-3">Chcete proces urychlit?</p>
-            <button 
-              onclick="openWhatsApp()" 
-              class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              Napsat přes WhatsApp
-            </button>
-          </div>
-        `;
+for (let i = 0; i < 80; i++) {
+  particles.push(new Particle());
+}
 
-          // Очищаем форму
-          form.reset();
-        }
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
 
-        function showError(data) {
-          let errorMessage =
-            "Omlouváme se, došlo k chybě. Zkuste to prosím znovu nebo mě kontaktujte přímo přes WhatsApp.";
+  // Линии между близкими частицами
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(168, 85, 247, ${0.06 * (1 - dist / 120)})`;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
 
-          if (data.errors) {
-            errorMessage = Object.values(data.errors).flat().join(". ");
-          } else if (data.error) {
-            errorMessage = data.error;
-          }
+// ===== GSAP АНИМАЦИИ =====
+gsap.registerPlugin(ScrollTrigger);
 
-          messagesDiv.innerHTML = `
-          <div class="formspree-error mb-4">
-            <p class="font-semibold">❌ ${errorMessage}</p>
-          </div>
-        `;
-        }
+// Reveal-элементы при скролле
+document.querySelectorAll('.reveal-text').forEach((el, i) => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1, y: 0,
+      duration: 0.8,
+      delay: i * 0.1,
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    }
+  );
+});
 
-        // Глобальная функция для открытия WhatsApp
-        window.openWhatsApp = function () {
-          let whatsappMessage = `Dobrý den, mám zájem o doménu vysledek.cz%0A%0A`;
-          whatsappMessage += `👤 Jméno: ${formData.name || ""}%0A`;
-          if (formData.email)
-            whatsappMessage += `📧 E-mail: ${formData.email}%0A`;
-          whatsappMessage += `💰 Nabídka: ${formData.offer || ""}%0A`;
-          if (formData.message)
-            whatsappMessage += `💬 Zpráva: ${formData.message}%0A`;
+// Счётчики
+document.querySelectorAll('.counter').forEach(counter => {
+  const target = parseInt(counter.dataset.target);
+  gsap.fromTo(counter,
+    { innerText: 0 },
+    {
+      innerText: target,
+      duration: 2,
+      ease: 'power2.out',
+      snap: { innerText: 1 },
+      scrollTrigger: {
+        trigger: counter,
+        start: 'top 90%'
+      }
+    }
+  );
+});
 
-          const phoneNumber = "420123456789"; // ← ЗАМЕНИТЕ НА СВОЙ НОМЕР
-          const whatsappURL = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
-          window.open(whatsappURL, "_blank");
-        };
-      })();
+// ===== ФОРМА (Formspree) =====
+const form = document.getElementById('contact-form');
+const messagesDiv = document.getElementById('form-messages');
+const submitBtn = document.getElementById('submit-btn');
+const submitText = document.getElementById('submit-text');
+const loadingSpinner = document.getElementById('loading-spinner');
+const messageInput = document.getElementById('message');
+const charCount = document.getElementById('char-count');
+let formData = {};
+
+messageInput?.addEventListener('input', function () {
+  const len = this.value.length;
+  charCount.textContent = `${len}/800`;
+  charCount.classList.toggle('text-yellow-500', len > 700);
+});
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  formData = {
+    name: document.getElementById('name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    offer: document.getElementById('offer').value.trim(),
+    message: messageInput?.value.trim() || ''
+  };
+
+  submitBtn.disabled = true;
+  submitText.textContent = 'Odesílám...';
+  loadingSpinner.classList.remove('hidden');
+  messagesDiv.innerHTML = '';
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      messagesDiv.innerHTML = `
+            <div class="formspree-success mb-6">
+              <p class="font-semibold text-lg mb-1">✓ Nabídka přijata</p>
+              <p class="text-sm opacity-80">Brzy se vám ozvu s odpovědí.</p>
+            </div>`;
+      form.reset();
+      charCount.textContent = '0/800';
+      gsap.fromTo('.formspree-success', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5 });
+    } else {
+      const data = await response.json();
+      const msg = data.errors ? Object.values(data.errors).flat().join('. ') : 'Chyba při odesílání.';
+      messagesDiv.innerHTML = `<div class="formspree-error mb-6"><p class="font-semibold">✗ ${msg}</p></div>`;
+    }
+  } catch {
+    messagesDiv.innerHTML = `<div class="formspree-error mb-6"><p class="font-semibold">✗ Síťová chyba. Zkuste to prosím znovu.</p></div>`;
+  } finally {
+    submitBtn.disabled = false;
+    submitText.textContent = 'Odeslat nabídku';
+    loadingSpinner.classList.add('hidden');
+  }
+});
